@@ -7,6 +7,5 @@
     - email-sendgrid
     - ANXS.postgresql
     - python3-ubuntu-repository
-#    - devel
-#    - geerlingguy.jenkins
-#    - misc
+    - geerlingguy.jenkins
+    - cron

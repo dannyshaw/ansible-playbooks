@@ -9,12 +9,15 @@
   template: src=update-exim4.conf.conf.j2 dest=/etc/exim4/update-exim4.conf.conf
   notify: Restart exim4
 
+- name: Add TLS support
+  lineinfile: create=yes dest=/etc/exim4/exim4.conf.localmacros line="MAIN_TLS_ENABLE = 1"
+  notify: Restart exim4
+
 - name: exim4 SendGrid password
   template: src=passwd.client.j2 dest=/etc/exim4/passwd.client owner=root group=Debian-exim mode=0640
   notify: Restart exim4
 
-# In Vagrant VMs, redirect all email from server to a specified email address
 - name: Redirect all email
   template: src=40_to-address-rewrite.j2 dest=/etc/exim4/conf.d/rewrite/40_to-address-rewrite owner=root group=root mode=0644
   notify: Restart exim4
-  when: ansible_hostname == 'vagrant'
+  when: email_redirect_address != ''

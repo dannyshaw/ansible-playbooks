@@ -13,9 +13,14 @@ Roles
 =====
 
 email-sendgrid
-  Installs exim4 and configures to route emails via SendGrid service. On
-  Vagrant VMs, it also redirects all outgoing emails to the address provided
-  in the variable email_redirect_address.
+  Installs exim4 and configures to route emails via SendGrid service. When
+  email_redirect_address is set to a non empty string, all outgoing 
+  emails are redirected to that address. Useful when running local VMs
+  ::
+    email_redirect_address: me@example.com
+    email_service_user: sendgriduser
+    email_service_passwd: sendgridpasswd
+
 
 ANXS.postgresql
   Popular Postgres role from Ansible Galaxy. For details and to source your own 

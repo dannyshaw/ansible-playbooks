@@ -1,0 +1,4 @@
+---
+- name: add cron entries
+  cron: name='{{ item.name }}' minute='{{ item.minute }}' hour='{{ item.hour }}' day='{{ item.day }}' month='{{ item.month }}' weekday='{{ item.weekday }}' job='{{ item.job }}' user='{{ item.user }}'
+  with_items: cron_entries

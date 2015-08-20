@@ -34,3 +34,17 @@ geerlingguy.java
   A dependency required by the geerlingguy.jenkins role from Ansible Galaxy. 
   For details and to source your own up-to-date copy: 
   https://galaxy.ansible.com/list#/roles/439
+  
+cron
+  Manage cron entries for users.
+  ..
+    cron_entries:
+      -
+        user: root
+        name: jenkins_backup
+        minute: '*'
+        hour: '10,13,17'
+        day: '*'
+        month: '*'
+        weekday: '*'
+        job: 'cp -R /var/lib/jenkins /vagrant'

@@ -22,5 +22,5 @@
     - tk8.5-dev
 
 - name: Install global python packages
-  pip: name="{{python_install|join(' ')}}" executable=/usr/bin/pip3
+  pip: name="{{python_global_packages|join(' ')}}" executable=/usr/bin/pip3
   when: python_install

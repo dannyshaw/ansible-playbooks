@@ -1,2 +1,2 @@
 ---
-python_install: []                  # Set packages to install globally
+python_global_packages: []

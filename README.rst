@@ -24,5 +24,5 @@ ANXS.postgresql
 python3-ubuntu-repository
   Install Python 3 from the Ubuntu repository
   :: 
-    python_install: []
+    python_global_packages: [virtualenvwrapper]
   

@@ -1,4 +1,5 @@
 A few playbooks I use to create Vagrant VMs for development and live servers
+running Ubuntu
 
 Playbooks
 =========
@@ -20,4 +21,8 @@ ANXS.postgresql
   Popular Postgres role from Ansible Galaxy. For details and to source your own 
   up-to-date copy: https://galaxy.ansible.com/list#/roles/512
   
+python3-ubuntu-repository
+  Install Python 3 from the Ubuntu repository
+  :: 
+    python_install: []
   

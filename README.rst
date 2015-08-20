@@ -37,7 +37,7 @@ geerlingguy.java
   
 cron
   Manage cron entries for users.
-  ..
+  ::
     cron_entries:
       -
         user: root

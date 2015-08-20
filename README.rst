@@ -22,7 +22,15 @@ ANXS.postgresql
   up-to-date copy: https://galaxy.ansible.com/list#/roles/512
   
 python3-ubuntu-repository
-  Install Python 3 from the Ubuntu repository
+  Installs Python 3 from the Ubuntu repository
   :: 
     python_global_packages: [virtualenvwrapper]
   
+geerlingguy.jenkins
+  A jenkins role from Ansible Galaxy. For details and to source your own 
+  up-to-date copy: https://galaxy.ansible.com/list#/roles/440
+  
+geerlingguy.java
+  A dependency required by the geerlingguy.jenkins role from Ansible Galaxy. 
+  For details and to source your own up-to-date copy: 
+  https://galaxy.ansible.com/list#/roles/439

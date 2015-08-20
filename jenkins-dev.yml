@@ -1,0 +1,12 @@
+---
+#
+# Creates and manages a Jenkins CI server running on a Ubuntu Vagrant VM
+#
+- hosts: all
+  roles:
+    - email-sendgrid
+    - ANXS.postgresql
+    - python3-ubuntu-repository
+#    - devel
+#    - geerlingguy.jenkins
+#    - misc

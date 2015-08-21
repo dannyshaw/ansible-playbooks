@@ -9,3 +9,7 @@
     - unzip
     - lynis             # auditing tool
     - chkrootkit        # tool to check for rootkit
+
+- name: Install extra OS packages
+  apt: pkg={{ item }}  state=present
+  with_items: extra_os_packages

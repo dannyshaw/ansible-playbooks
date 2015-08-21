@@ -4,7 +4,7 @@
 #
 - hosts: all
   roles:
-    - common-packages
+    - os-packages
     - email-sendgrid
     - ANXS.postgresql
     - python3-ubuntu-repository

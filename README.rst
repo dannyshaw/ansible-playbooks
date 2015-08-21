@@ -21,7 +21,9 @@ email-sendgrid
     email_service_user: sendgriduser
     email_service_passwd: sendgridpasswd
 
-
+common-packages
+  Some common OS packages installed everywhere
+  
 ANXS.postgresql
   Popular Postgres role from Ansible Galaxy. For details and to source your own 
   up-to-date copy: https://galaxy.ansible.com/list#/roles/512

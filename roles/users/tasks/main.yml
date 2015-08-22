@@ -1,0 +1,5 @@
+---
+
+- name: Add RSA key to the remote host"
+  authorized_key: user='{{ admin_user.id }}' key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  when: ansible_hostname != 'vagrant'

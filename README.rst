@@ -8,6 +8,15 @@ jenkins-dev.yml
   Creates and Manages a Vagrant VM for running Jenkins CI server for use,
   in this case, to run tests against Django projects with a Postgres 
   database
+
+Examples
+========
+
+The examples folder contains some example server configurations and Vagrant files.
+In most cases, provided you have the prerequisites installed
+(Python, Ansible, Vagrant) you
+should be able to run ``vagrant up`` from within the individual example directories.
+
   
 Roles
 =====

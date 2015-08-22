@@ -18,11 +18,11 @@ Steps to Run
 * Review and change any settings in ``ansible-settings.yml``. Those
   to address are:
 
-    - Email settings for SendGrid
+  - Email settings for SendGrid
 
-    - Postgres database settings. These are the database details of your Django
-      project database. Eventually you'll need one set of database settings for
-      each project that the Jenkins server tests against.
+  - Postgres database settings. These are the database details of your Django
+    project database. Eventually you'll need one set of database settings for
+    each project that the Jenkins server tests against.
 
 * Run ``vagrant up``
 

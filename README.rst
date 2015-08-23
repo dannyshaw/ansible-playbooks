@@ -66,3 +66,6 @@ cron
         month: '*'
         weekday: '*'
         job: 'cp -R /var/lib/jenkins /vagrant'
+
+secure-ssh
+  Secure SSH on productions servers.

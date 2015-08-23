@@ -1,5 +1,5 @@
 A few playbooks I use to create Vagrant VMs for development and live servers
-running Ubuntu
+running Django on Ubuntu 14.04
 
 Playbooks
 =========
@@ -21,6 +21,12 @@ should be able to run ``vagrant up`` from within the individual example director
 Roles
 =====
 
+A selection of roles used to create development and production servers.
+Some roles are self created while others are from Ansible Galaxy and
+clearly indicated as such. Original I started mostly with roles of my
+own creation, but over time have migrated to roles from Ansible
+Galaxy as I've discovered good ones.
+
 email-sendgrid
   Installs exim4 and configures to route emails via SendGrid service. When
   email_redirect_address is set to a non empty string, all outgoing 
@@ -40,7 +46,7 @@ ANXS.postgresql
   up-to-date copy: https://galaxy.ansible.com/list#/roles/512
   
 python3-ubuntu-repository
-  Installs Python 3 from the Ubuntu repository
+  Installs Python 3 from the Ubuntu (14.04) repository
   :: 
     python_global_packages: [virtualenvwrapper]
   
@@ -69,3 +75,7 @@ cron
 
 secure-ssh
   Secure SSH on productions servers.
+
+jdauphant.nginx
+  An nginx role for Ansible Galaxy. For details and to source your own
+  up-to-date copy: https://galaxy.ansible.com/list#/roles/466

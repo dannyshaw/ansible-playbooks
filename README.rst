@@ -22,15 +22,15 @@ Roles
 =====
 
 A selection of roles used to create development and production servers.
-Some roles are self created while others are from Ansible Galaxy and
-clearly indicated as such. Original I started mostly with roles of my
+Some roles are created by myself while others are from Ansible Galaxy and
+clearly indicated as such. Originally I started mostly with roles of my
 own creation, but over time have migrated to roles from Ansible
 Galaxy as I've discovered good ones.
 
 email-sendgrid
   Installs exim4 and configures to route emails via SendGrid service. When
   email_redirect_address is set to a non empty string, all outgoing 
-  emails are redirected to that address. Useful when running local VMs
+  emails are redirected to that address. Useful when running development VMs
   ::
     email_redirect_address: me@example.com
     email_service_user: sendgriduser
@@ -79,3 +79,8 @@ secure-ssh
 jdauphant.nginx
   An nginx role for Ansible Galaxy. For details and to source your own
   up-to-date copy: https://galaxy.ansible.com/list#/roles/466
+
+jcsaaddupuy.supervisord_config
+  A supervisord role for Ansible Galaxy. For details and to source your own
+  up-to-date copy: https://galaxy.ansible.com/list#/roles/3090
+

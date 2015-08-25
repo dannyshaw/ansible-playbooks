@@ -3,8 +3,10 @@
 - name: some useful development aliases
   lineinfile: dest={{ admin_user.home }}/.bash_aliases state=present create=yes line='{{ item }}'
   with_items:
-    - 'alias djrun="cd /vagrant;./manage.py runserver 0.0.0.0:8000"'
-    - 'alias djrun+="cd /vagrant;./manage.py runserver_plus 0.0.0.0:8000"'
+    - 'alias djrun="cd {{ project_root }};./manage.py runserver 0.0.0.0:8000"'
+    - 'alias djrun+="cd {{ project_root }};./manage.py runserver_plus 0.0.0.0:8000"'
+    - 'alias h=history'
+  sudo: no
 
 - name: devel pg_dump cron job
   cron: name='pg_dump' minute='*/20' job='pg_dump -U {{ postgresql_admin_user }} {{ db_name }} > {{ data_directory }}/{{ data_backup_file }}' user='{{ admin_user.id }}'
@@ -14,5 +16,10 @@
 - name: populate database from db backup alias
   lineinfile: dest={{ admin_user.home }}/.bash_aliases state=present create=yes line='{{ item }}'
   with_items:
-    - 'alias load-dev-db="psql -U {{ postgresql_admin_user }} -d {{ db_name }} < {{ data_directory }}/{{ data_backup_file }}"'
+    - 'alias restore-dev-db="psql -U {{ postgresql_admin_user }} -d {{ db_name }} < {{ data_directory }}/{{ data_backup_file }}"'
   when: postgresql_version is defined
+  sudo: no
+
+- name: Change to project directory (shared folder) on shell login
+  lineinfile: dest={{ admin_user.home }}/.bashrc state=present line="cd {{ project_root }}" insertafter=EOF
+  sudo: no

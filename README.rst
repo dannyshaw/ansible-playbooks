@@ -84,3 +84,8 @@ jcsaaddupuy.supervisord_config
   A supervisord role for Ansible Galaxy. For details and to source your own
   up-to-date copy: https://galaxy.ansible.com/list#/roles/3090
 
+devel-extras
+  Performs a number of tasks specific to development. These include:
+
+  * Adding some useful development aliases.
+  * Adding a cron task to backup the project database every 20 minutes.

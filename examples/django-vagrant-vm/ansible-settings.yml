@@ -35,6 +35,7 @@ project_hostname: localhost
 db_name: '{{ project_name }}'
 db_user:  '{{ project_name }}_user'
 db_password: '{{ project_name }}_pw'
+db_host: localhost
 
 #
 # Django settings
@@ -47,6 +48,21 @@ django_secret_key: 'CHANGE_ME!'
 python_virtualenvs:
   - name: '{{ project_name|upper }}'
     home: '{{ admin_user.home }}'
+    owner: '{{ admin_user.id }}'
+
+virtualenv_activate_settings:
+  - name: '{{ project_name|upper }}'
+    home: '{{ admin_user.home }}'
+    env_key: 'SECRET_KEY'
+    env_value: "{{ django_secret_key }}"
+  - name: '{{ project_name|upper }}'
+    home: '{{ admin_user.home }}'
+    env_key: 'DJANGO_SETTINGS_MODULE'
+    env_value: "config.settings.local"
+  - name: '{{ project_name|upper }}'
+    home: '{{ admin_user.home }}'
+    env_key: 'DATABASE_URL'
+    env_value: 'postgres://{{ db_user }}:{{ db_password }}@{{ db_host }}/{{ db_name }}'
 
 #
 # Postgres

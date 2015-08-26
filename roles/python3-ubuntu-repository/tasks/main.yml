@@ -21,5 +21,18 @@
     - tcl8.5-dev
     - tk8.5-dev
 
+- name: Update tools
+  pip: name='setuptools virtualenv pip' state=latest executable=/usr/bin/pip3
+
 - name: Install global python packages
-  pip: name="{{python_global_packages|join(' ')}}" executable=/usr/bin/pip3
+  pip: name='{{python_global_packages|join(" ")}}' executable=/usr/bin/pip3
+
+- name: Setup virtualenvs
+  shell: virtualenv {{ item.home }}/.virtualenvs/{{ item.name }} --python=python3
+  args:
+    creates: '{{ item.home }}/.virtualenvs/{{ item.name }}'
+  with_items: python_virtualenvs
+
+- name: Activate virtualenv on shell login for each virtualenv
+  lineinfile: dest={{ item.home }}/.bashrc state=present line="source {{ item.home }}/.virtualenvs/{{ item.name }}/bin/activate"
+  with_items: python_virtualenvs

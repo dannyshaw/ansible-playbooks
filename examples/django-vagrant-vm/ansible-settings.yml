@@ -1,0 +1,129 @@
+---
+
+#
+# OS packages
+#
+extra_os_packages: [supervisor]
+
+#
+# Server admin user i.e sudoer
+admin_user:
+  id: vagrant
+  group: vagrant
+  shell: /bin/bash
+  email: nigel@thebluehut.com
+  home: /home/vagrant
+
+#
+# email service credentials
+#
+email_redirect_address: me@example.com
+email_service_user: sendgriduser
+email_service_passwd: sendgridpasswd
+
+#
+# Server settings
+#
+server_hostname: localhost
+
+#
+# project settings
+#
+project_name: my_app
+project_root: '/home/vagrant/{{ project_name }}'                # Django project root
+project_hostname: localhost
+db_name: '{{ project_name }}'
+db_user:  '{{ project_name }}_user'
+db_password: '{{ project_name }}_pw'
+
+#
+# Django settings
+#
+django_secret_key: 'CHANGE_ME!'
+
+#
+# Python
+#
+python_virtualenvs:
+  - name: '{{ project_name|upper }}'
+    home: '{{ admin_user.home }}'
+
+#
+# Postgres
+#
+postgresql_version: 9.4
+
+# Extensions
+postgresql_ext_install_dev_headers: yes
+
+# List of databases to be created (optional)
+postgresql_databases:
+  - name: '{{ db_name }}'
+    hstore: no         # flag to install the hstore extension on this database (yes/no)
+    uuid_ossp: no      # flag to install the uuid-ossp extension on this database (yes/no)
+
+# List of users to be created (optional)
+postgresql_users:
+  - name: '{{ db_user }}'
+    pass: '{{ db_password }}'
+    encrypted: no       # denotes if the password is already encrypted.
+
+# List of user privileges to be applied (optional)
+postgresql_user_privileges:
+  - name: '{{ db_user }}'          # user name
+    db: '{{ db_name }}'         # database
+    priv: 'ALL'        # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
+    role_attr_flags: 'CREATEDB' # Allows tests to create test database
+
+#
+# nginx
+#
+nginx_sites:
+  default:
+      - listen 80 default
+      - server_name _
+      - root '/var/www'
+      - index index.html
+  my_app-redirect:
+      - listen 80
+      - server_name {{ project_hostname }}
+      - rewrite / $scheme://www.$host$request_uri permanent
+  my_app:
+      - listen 80
+# listen 443 default ssl
+# ssl_certificate     /etc/nginx/conf.d/DOMAIN.crt
+# ssl_certificate_key /etc/nginx/conf.d/DOMAIN.key
+# ssl_protocols TLSv1 TLSv1.1 TLSv1.2
+      - server_name www.{{ project_hostname }} *.{{ project_hostname }}
+      - root '{{ project_root }}'
+      - access_log /var/log/nginx/{{ project_hostname }}-access.log
+      - error_log /var/log/nginx/{{ project_hostname }}-error.log
+      - location /static/ { alias {{ project_root }}/staticfiles/; expires 30d; }
+      - location /media/ { alias {{ project_root }}/media/; expires 30d; }
+      - location  / { proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header Host $http_host; proxy_redirect off; if (!-f $request_filename) { proxy_pass http://{{ project_name }}_app_server; break; } }
+
+nginx_configs:
+  upstream:
+    - upstream {{ project_name }}_app_server { server unix:/tmp/gunicorn-{{ project_name }}.sock fail_timeout=0; }
+
+#
+# supervisord
+#
+supervisord_config_location: '/etc/supervisor/conf.d'
+supervisord_programs:
+  gunicorn:
+    program_name: '{{ project_name }}'
+    # Anything bellow will ends in the config file
+    user: '{{ admin_user.id }}'
+    group: '{{ admin_user.group }}'
+    numprocs: 1
+    # require higher retries than default 3 on vagrant to allow shared folder to come online
+    startretries: 10
+    environment:  DJANGO_SETTINGS_MODULE="config.settings.production", DJANGO_SECRET_KEY="{{ django_secret_key }}", DATABASE_URL="postgres://{{ db_user }}:{{ db_password }}@{{ db_host }}/{{ db_name }}", PATH="{{ virtualenv_directory }}/bin"
+    command: '{{ virtualenv_directory }}/bin/gunicorn config.wsgi:application -b unix:/tmp/gunicorn-{{ project_name }}.sock -u {{ admin_user.id }} -g {{ admin_user.group }} --workers 1'
+    directory: '/vagrant'
+    autostart: 'true'
+    autorestart: 'true'
+    redirect_stderr: 'true'
+    stdout_logfile: /var/log/supervisor/{{ project_hostname }}-stdout.log
+    stderr_logfile : /var/log/supervisor/{{ project_hostname }}-stderr.log

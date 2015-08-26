@@ -1,0 +1,11 @@
+---
+- hosts: all
+  roles:
+    - os-packages
+    - email-sendgrid
+    - ANXS.postgresql
+    - python3-ubuntu-repository
+    - devel-ruby
+    - jdauphant.nginx
+    - jcsaaddupuy.supervisord_config
+    - devel-extras

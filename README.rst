@@ -9,6 +9,10 @@ jenkins-dev.yml
   in this case, to run tests against Django projects with a Postgres 
   database
 
+django-dev.yml
+  Creates and Manages a Vagrant VM for running Django projects. See examples
+  directory for an example of how to use.
+
 Examples
 ========
 

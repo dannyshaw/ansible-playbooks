@@ -46,9 +46,12 @@ ANXS.postgresql
   up-to-date copy: https://galaxy.ansible.com/list#/roles/512
   
 python3-ubuntu-repository
-  Installs Python 3 from the Ubuntu (14.04) repository
+  Installs Python 3 from the Ubuntu (14.04) repository and sets up virtualenvs.
   :: 
     python_global_packages: [virtualenvwrapper]
+    python_virtualenvs:
+      - name: MY_APP
+        home: /home/vagrant
   
 geerlingguy.jenkins
   A jenkins role from Ansible Galaxy. For details and to source your own 

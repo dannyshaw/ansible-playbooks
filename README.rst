@@ -89,3 +89,8 @@ devel-extras
 
   * Adding some useful development aliases.
   * Adding a cron task to backup the project database every 20 minutes.
+
+devel-ruby
+  Installs RVM based Ruby for development purposes. e.g. SASS, Compass, ...
+  ::
+    ruby_ver: 2.2.3

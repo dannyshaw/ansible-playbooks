@@ -1,0 +1,11 @@
+---
+
+- name: install mpapis public key
+  shell: gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+  sudo: no
+
+- name: ruby install
+  shell: \curl -sSL https://get.rvm.io | bash -s stable --ruby={{ ruby_ver }}
+  args:
+    creates: '{{ admin_user.home }}/.rvm/rubies/default/bin/ruby'
+  sudo: no

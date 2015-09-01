@@ -28,17 +28,17 @@
   pip: name='{{python_global_packages|join(" ")}}' executable=/usr/bin/pip3
 
 - name: Setup virtualenvs
-  shell: virtualenv {{ item.home }}/.virtualenvs/{{ item.name }} --python=python3
+  shell: virtualenv {{ item.home }}/{{ item.name }} --python=python3
   args:
-    creates: '{{ item.home }}/.virtualenvs/{{ item.name }}'
+    creates: '{{ item.home }}/{{ item.name }}'
   with_items: python_virtualenvs
   become: yes
   become_user: '{{ item.owner }}'
 
 - name: setup activate environment settings
-  lineinfile: dest={{ item.home }}/.virtualenvs/{{ item.name }}/bin/activate state=present line='export {{ item.env_key }}="{{ item.env_value }}"'
+  lineinfile: dest={{ item.home }}/{{ item.name }}/bin/activate state=present line='export {{ item.env_key }}="{{ item.env_value }}"'
   with_items: virtualenv_activate_settings
 
 - name: Activate virtualenv on shell login for each virtualenv
-  lineinfile: dest={{ item.home }}/.bashrc state=present line="source {{ item.home }}/.virtualenvs/{{ item.name }}/bin/activate"
+  lineinfile: dest={{ item.home }}/.bashrc state=present line="source {{ item.home }}/{{ item.name }}/bin/activate"
   with_items: python_virtualenvs

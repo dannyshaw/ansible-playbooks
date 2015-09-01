@@ -31,7 +31,7 @@ server_hostname: localhost
 #
 project_name: my_app
 project_root: '/home/vagrant/{{ project_name }}'                # Django project root
-project_hostname: localhost
+project_hostname: django
 db_name: '{{ project_name }}'
 db_user:  '{{ project_name }}_user'
 db_password: '{{ project_name }}_pw'
@@ -95,25 +95,12 @@ postgresql_user_privileges:
 # nginx
 #
 nginx_sites:
-  default:
-      - listen 80 default
-      - server_name _
-      - root '/var/www'
-      - index index.html
-  my_app-redirect:
+  app:
       - listen 80
       - server_name {{ project_hostname }}
-      - rewrite / $scheme://www.$host$request_uri permanent
-  my_app:
-      - listen 80
-# listen 443 default ssl
-# ssl_certificate     /etc/nginx/conf.d/DOMAIN.crt
-# ssl_certificate_key /etc/nginx/conf.d/DOMAIN.key
-# ssl_protocols TLSv1 TLSv1.1 TLSv1.2
-      - server_name www.{{ project_hostname }} *.{{ project_hostname }}
       - root '{{ project_root }}'
-      - access_log /var/log/nginx/{{ project_hostname }}-access.log
-      - error_log /var/log/nginx/{{ project_hostname }}-error.log
+      - access_log /var/log/nginx/{{ project_name }}-access.log
+      - error_log /var/log/nginx/{{ project_name }}-error.log
       - location /static/ { alias {{ project_root }}/staticfiles/; expires 30d; }
       - location /media/ { alias {{ project_root }}/media/; expires 30d; }
       - location  / { proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header Host $http_host; proxy_redirect off; if (!-f $request_filename) { proxy_pass http://{{ project_name }}_app_server; break; } }
@@ -135,11 +122,14 @@ supervisord_programs:
     numprocs: 1
     # require higher retries than default 3 on vagrant to allow shared folder to come online
     startretries: 10
-    environment:  DJANGO_SETTINGS_MODULE="config.settings.production", DJANGO_SECRET_KEY="{{ django_secret_key }}", DATABASE_URL="postgres://{{ db_user }}:{{ db_password }}@{{ db_host }}/{{ db_name }}", PATH="{{ virtualenv_directory }}/bin"
-    command: '{{ virtualenv_directory }}/bin/gunicorn config.wsgi:application -b unix:/tmp/gunicorn-{{ project_name }}.sock -u {{ admin_user.id }} -g {{ admin_user.group }} --workers 1'
-    directory: '/vagrant'
+    # Setup runtime environment. Most of these are specific to the cookiecutter-django
+    # project template (see https://github.com/pydanny/cookiecutter-django)
+    # note: we are preventing SSL redirect by setting DJANGO_SECURE_SSL_REDIRECT to false
+    environment: DJANGO_SECURE_SSL_REDIRECT="False", DJANGO_SETTINGS_MODULE="config.settings.production", DJANGO_SECRET_KEY="{{ django_secret_key }}", DATABASE_URL="postgres://{{ db_user }}:{{ db_password }}@{{ db_host }}/{{ db_name }}", PATH="{{ python_virtualenvs[0].home }}/{{ python_virtualenvs[0].name }}/bin"
+    command: '{{ python_virtualenvs[0].home }}/{{ python_virtualenvs[0].name }}/bin/gunicorn config.wsgi:application -b unix:/tmp/gunicorn-{{ project_name }}.sock -u {{ admin_user.id }} -g {{ admin_user.group }} --workers 1'
+    directory: '{{ project_root }}'
     autostart: 'true'
     autorestart: 'true'
     redirect_stderr: 'true'
-    stdout_logfile: /var/log/supervisor/{{ project_hostname }}-stdout.log
-    stderr_logfile : /var/log/supervisor/{{ project_hostname }}-stderr.log
+    stdout_logfile: /var/log/supervisor/{{ project_name }}-stdout.log
+    stderr_logfile : /var/log/supervisor/{{ project_name }}-stderr.log

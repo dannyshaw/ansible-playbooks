@@ -1,6 +1,4 @@
 ---
 python_global_packages: []
-python_virtualenvs: []              # Create virtualenvs
-                                    # Ex: python_virtualenvs:
-                                    #     - name: PROJECT_NAME
-                                    #       home: /user/vagrant
+python_virtualenvs: []
+virtualenv_activate_settings: []

@@ -20,24 +20,24 @@ postgresql_version: 9.4
 # Extensions
 postgresql_ext_install_dev_headers: yes
 
-# List of databases to be created (optional)
+# For jenkins we just need one postgres user with CREATEDB privilege
 postgresql_databases:
-  - name: "my_db"
+  - name: "jenkins"
     hstore: no         # flag to install the hstore extension on this database (yes/no)
     uuid_ossp: no      # flag to install the uuid-ossp extension on this database (yes/no)
 
 # List of users to be created (optional)
 postgresql_users:
-  - name: "my_db_user"
-    pass: "password"
+  - name: "jenkins"
+    pass: "jenkins"
     encrypted: no       # denotes if the password is already encrypted.
 
 # List of user privileges to be applied (optional)
 postgresql_user_privileges:
-  - name: "my_db_user"          # user name
-    db: "my_db"                 # database
-    priv: "ALL"                 # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
-    role_attr_flags: "CREATEDB" # Allows Django DB tests to create test database
+  - name: "jenkins"         # user name
+    db: "jenkins"           # database
+    priv: "ALL"           # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
+    role_attr_flags: "CREATEDB" # Allows tests to create test database
 
 #
 # Jenkins

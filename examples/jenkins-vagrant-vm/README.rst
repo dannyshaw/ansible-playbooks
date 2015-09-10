@@ -8,21 +8,25 @@ sloccount (lines of code)
 
 Prerequisites
 =============
+On you local machine, you'll need:
 
-* Vagrant install
+* VirtualBox
+* Vagrant
 * A Python 2.7 virtual environment with Ansible installed
 
 Steps to Run
 ============
+
+Note: This has only been tested on a Ubuntu 14.04 host.
 
 * Review and change any settings in ``ansible-settings.yml``. Those
   to address are:
 
   - Email settings for SendGrid
 
-  - Postgres database settings. These are the database details of your Django
-    project database. Eventually you'll need one set of database settings for
-    each project that the Jenkins server tests against.
+  - Test Postgres database settings (the defaults will work for you though).
+    This is the postgres role that tests will use to create databases
+    during test execution.
 
 * Run ``vagrant up``
 

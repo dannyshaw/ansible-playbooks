@@ -53,7 +53,7 @@ jenkins_plugins:
   - sloccount
 
 #
-# Cron
+# Cron - rsync Jenkins configurations to the Vagrant shared folder as a backup in the the VM fails.
 #
 cron_entries:
   -

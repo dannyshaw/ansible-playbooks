@@ -13,6 +13,11 @@
   when: postgresql_version is defined
   sudo: no
 
+- name: devel mysqldump cron job
+  cron: name='mysqldump' minute='*/20' job='mysqldump -u root {{ db_name }} > {{ data_directory }}/{{ data_backup_file }}' user='{{ admin_user.id }}'
+  when: mysql_databases is defined
+  sudo: no
+
 - name: populate database from db backup alias
   lineinfile: dest={{ admin_user.home }}/.bash_aliases state=present create=yes line='{{ item }}'
   with_items:

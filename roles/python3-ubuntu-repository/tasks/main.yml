@@ -20,6 +20,7 @@
     - libwebp-dev
     - tcl8.5-dev
     - tk8.5-dev
+    - gettext         # GNU gettext toolset for translations
 
 - name: Update tools
   pip: name='setuptools virtualenv pip' state=latest executable=/usr/bin/pip3

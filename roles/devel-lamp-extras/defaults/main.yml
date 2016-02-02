@@ -1,0 +1,3 @@
+---
+data_directory: '{{ project_root }}/db'
+data_backup_file: dev-db.sql

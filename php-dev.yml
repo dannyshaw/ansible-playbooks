@@ -1,0 +1,12 @@
+---
+# A LAMP stack suitable for Wordpress/Magento/Drupal
+- hosts: all
+  roles:
+    - os-packages
+    - email-sendgrid
+    - geerlingguy.mysql
+    - kosssi.php
+    - nbz4live.php-fpm
+    - jdauphant.nginx
+    - devel-lamp-extras
+    - cron

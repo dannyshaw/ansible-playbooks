@@ -1,7 +1,18 @@
 ---
 
+- name: some useful development aliases
+  lineinfile: dest={{ admin_user.home }}/.bash_aliases state=present create=yes line='{{ item }}'
+  with_items:
+    - 'alias h=history'
+  sudo: no
+
+- name: bashrc entries
+  lineinfile: dest={{ admin_user.home }}/.bashrc state=present create=yes line='{{ item }}'
+  with_items: bashrc_entries
+  sudo: no
+
 - name: devel mysqldump cron job
-  cron: name='mysqldump' minute='*/20' job='mysqldump -u root {{ db_name }} > {{ data_directory }}/{{ data_backup_file }}' user='{{ admin_user.id }}'
+  cron: name='mysqldump' minute='*/20' job='mysqldump --user={{ mysql_root_username }} --password={{ mysql_root_password }} {{ db_name }} > {{ data_directory }}/{{ data_backup_file }}' user='{{ admin_user.id }}'
   when: mysql_databases is defined
   sudo: no
 

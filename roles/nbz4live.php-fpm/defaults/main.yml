@@ -40,4 +40,4 @@ php_fpm_ini:
 php_fpm_config:
  - option: "error_log"
    section: "global"
-   value: "/var/log/php5-fpm.log"
+   value: "/var/log/php-fpm.log"

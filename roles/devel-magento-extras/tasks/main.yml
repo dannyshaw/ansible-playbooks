@@ -4,3 +4,17 @@
 
 - name: Add webserver user(www-data) magento group(vagrant)
   user: name=www-data groups=vagrant
+
+- name: make bin directory
+  file: path={{ admin_user.home }}/bin state=directory
+  sudo: no
+
+- name: Install composer
+  shell: \curl -sS https://getcomposer.org/installer | php -- --install-dir={{ admin_user.home }}/bin
+  args:
+    creates: '{{ admin_user.home }}/bin/composer.phar'
+  sudo: no
+
+- name: Copy composer.phar to composer
+  copy: remote_src=True src={{ admin_user.home }}/bin/composer.phar dest={{ admin_user.home }}/bin/composer mode='u+x,g+x'
+  sudo: no

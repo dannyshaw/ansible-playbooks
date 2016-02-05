@@ -1,0 +1,6 @@
+---
+- name: Add magento user(vagrant) to webserver group(www-data)
+  user: name=vagrant groups=www-data
+
+- name: Add webserver user(www-data) magento group(vagrant)
+  user: name=www-data groups=vagrant

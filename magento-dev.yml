@@ -8,6 +8,7 @@
     - kosssi.php
     - nbz4live.php-fpm
     - jdauphant.nginx
+    - git
     - devel-lamp-extras
     - devel-magento-extras
     - cron

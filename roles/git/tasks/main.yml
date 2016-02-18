@@ -1,0 +1,12 @@
+---
+
+- name: Git | Add Git repository
+  apt_repository:
+    repo: "{{ git_apt_repository }}"
+    state: present
+    update_cache: yes
+
+- name: Git | install
+  apt: name={{ item }} state=present
+  with_items:
+    - "{{ git_packages}}"

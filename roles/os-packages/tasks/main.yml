@@ -5,7 +5,6 @@
 - name: Install common OS packages
   apt: pkg={{ item }}  state=present
   with_items:
-    - git
     - unzip
     - lynis             # auditing tool
     - chkrootkit        # tool to check for rootkit

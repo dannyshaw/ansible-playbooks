@@ -1,0 +1,6 @@
+---
+git_apt_repository: 'ppa:git-core/ppa'
+git_packages:
+  - git
+  - git-man
+  - git-doc

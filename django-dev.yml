@@ -8,4 +8,5 @@
     - devel-ruby
     - jdauphant.nginx
     - jcsaaddupuy.supervisord_config
+    - git
     - devel-django-extras

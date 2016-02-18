@@ -9,4 +9,5 @@
     - ANXS.postgresql
     - python3-ubuntu-repository
     - geerlingguy.jenkins
+    - git
     - cron

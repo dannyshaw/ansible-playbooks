@@ -67,7 +67,10 @@ virtualenv_activate_settings:
 #
 # Postgres
 #
-postgresql_version: 9.4
+postgresql_version: 9.5
+postgresql_locale_parts:
+  - 'en_CA' # Locale
+  - 'UTF-8' # Encoding
 
 # Extensions
 postgresql_ext_install_dev_headers: yes
